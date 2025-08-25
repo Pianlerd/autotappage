@@ -3,431 +3,1151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>จัดรูปแบบรายงานอัตโนมัติ</title>
+    <title>ระบบจัดรูปแบบรายงานทางการ - กรมพัฒนาเทคโนโลยีสารสนเทศ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600&display=swap');
-        
-        /* General Styles */
+        :root {
+            /* Official Color Palette */
+            --primary-blue: #1e3a8a;
+            --primary-blue-light: #3b82f6;
+            --primary-blue-dark: #1e40af;
+            --secondary-blue: #1e40af;
+            --accent-gold: #d97706;
+            --accent-gold-light: #f59e0b;
+            
+            /* Neutral Colors */
+            --white: #ffffff;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --gray-900: #0f172a;
+            
+            /* Status Colors */
+            --success: #059669;
+            --warning: #d97706;
+            --error: #dc2626;
+            --info: #0284c7;
+            
+            /* Typography */
+            --font-primary: 'Sarabun', 'TH Sarabun PSK', sans-serif;
+            --font-secondary: 'Inter', system-ui, sans-serif;
+            
+            /* Spacing */
+            --space-xs: 0.25rem;
+            --space-sm: 0.5rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            --space-2xl: 3rem;
+            --space-3xl: 4rem;
+            
+            /* Border Radius */
+            --radius-sm: 0.25rem;
+            --radius-md: 0.375rem;
+            --radius-lg: 0.5rem;
+            --radius-xl: 0.75rem;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Sarabun', 'TH Sarabun PSK', sans-serif;
-            background-color: #f0f2f5;
-            margin: 0;
-            padding: 40px 20px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
+            font-family: var(--font-primary);
+            background: linear-gradient(135deg, var(--gray-50) 0%, var(--gray-100) 100%);
+            color: var(--gray-800);
+            line-height: 1.6;
             min-height: 100vh;
-            color: #34495e;
+            font-size: 16px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            color: var(--white);
+            padding: var(--space-xl) 0;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--space-xl);
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--space-lg);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: var(--space-lg);
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--primary-blue);
+            font-weight: 700;
+            box-shadow: var(--shadow-md);
+        }
+
+        .org-info h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: var(--space-xs);
+            letter-spacing: -0.025em;
+        }
+
+        .org-info p {
+            font-size: 1rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        .system-badge {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: var(--space-sm) var(--space-lg);
+            border-radius: var(--radius-lg);
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-top: var(--space-lg);
+        }
+
+        .page-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: var(--space-sm);
+            letter-spacing: -0.025em;
+        }
+
+        .page-title p {
+            font-size: 1.125rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--space-3xl) var(--space-xl);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-2xl);
+            align-items: start;
+            flex-grow: 1;
+        }
+
+        /* Card Styles */
+        .card {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--gray-200);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-xl);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--gray-50) 0%, var(--gray-100) 100%);
+            padding: var(--space-xl);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: var(--space-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .card-subtitle {
+            font-size: 1rem;
+            color: var(--gray-600);
             line-height: 1.6;
         }
 
-        .container {
-            width: 100%;
-            max-width: 900px;
-            background-color: #ffffff;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            padding: 30px 40px;
-            box-sizing: border-box;
+        .card-body {
+            padding: var(--space-xl);
         }
 
-        h1, h2, h3 {
-            color: #0a7aff;
-            text-align: center;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-        
-        h1 {
-            font-size: 2.2rem;
-            letter-spacing: -0.5px;
+        /* Form Elements */
+        .form-group {
+            margin-bottom: var(--space-xl);
         }
 
-        p.description {
-            text-align: center;
-            color: #7f8c8d;
-            margin-bottom: 30px;
-            font-size: 1.1rem;
-        }
-
-        /* Input and Output Box Styles */
-        .card-section {
-            background-color: #fcfdff;
-            border: 1px solid #e9ecef;
-            border-radius: 12px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        label {
+        .form-label {
             display: block;
-            margin-bottom: 10px;
+            font-size: 1rem;
             font-weight: 600;
-            color: #2c3e50;
-            font-size: 1.1rem;
+            color: var(--gray-700);
+            margin-bottom: var(--space-md);
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+            font-size: 0.875rem;
         }
 
-        textarea {
-            width: 100%;
-            min-height: 250px;
-            padding: 15px;
-            border: 1px solid #bdc3c7;
-            border-radius: 10px;
-            font-size: 1rem;
-            line-height: 1.6;
-            resize: vertical;
-            box-sizing: border-box;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-            font-family: 'Sarabun', 'TH Sarabun PSK', sans-serif;
+        .prefix-control {
+            background: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            margin-bottom: var(--space-xl);
+            transition: all 0.3s ease;
         }
-        textarea:focus {
+
+        .prefix-control:hover {
+            border-color: var(--primary-blue-light);
+            background: var(--white);
+        }
+
+        .prefix-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: var(--space-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        .prefix-input {
+            width: 120px;
+            padding: var(--space-md);
+            border: 2px solid var(--gray-300);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            font-family: var(--font-primary);
+            background: var(--white);
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .prefix-input:focus {
             outline: none;
-            border-color: #0a7aff;
-            box-shadow: 0 0 0 4px rgba(10, 122, 255, 0.15);
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
-        .output-box {
-            background-color: #f9f9fb;
-            border: 1px solid #ced4da;
-            border-radius: 10px;
-            padding: 25px;
+        .prefix-example {
+            margin-top: var(--space-sm);
+        }
+
+        .prefix-example small {
+            color: var(--gray-500);
+            font-size: 0.8125rem;
+            line-height: 1.5;
+        }
+
+        .form-textarea {
+            width: 100%;
             min-height: 200px;
-            overflow-x: auto;
-            word-wrap: break-word;
+            padding: var(--space-lg);
+            border: 2px solid var(--gray-300);
+            border-radius: var(--radius-lg);
             font-size: 1rem;
             line-height: 1.7;
-            color: #2c3e50;
-            user-select: text;
-            font-family: 'Sarabun', 'TH Sarabun PSK', sans-serif;
-            font-weight: 400; /* Regular weight for content */
-        }
-        .output-box p {
-            margin: 0;
-            line-height: 1.7;
-            font-weight: inherit;
+            font-family: var(--font-primary);
+            background: var(--white);
+            resize: vertical;
+            transition: all 0.3s ease;
+            overflow-y: auto;
+            word-wrap: break-word;
             white-space: pre-wrap;
         }
-        .output-box p.heading-line {
-            font-weight: 600;
-            font-size: 1.05rem;
-            color: #2c3e50;
+
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
-        .output-box p.placeholder {
-            text-align: center;
-            color: #95a5a6;
+
+        .form-textarea::placeholder {
+            color: var(--gray-400);
             font-style: italic;
-            padding-top: 50px;
         }
 
         /* Button Styles */
         .button-group {
             display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 25px;
-            justify-content: center;
+            gap: var(--space-md);
+            margin-top: var(--space-xl);
+            flex-wrap: wrap; /* Added for responsive wrap */
         }
 
         .btn {
-            padding: 14px 30px;
-            border-radius: 50px;
-            font-size: 1.05rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            text-align: center;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            min-width: 180px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            gap: var(--space-sm);
+            padding: var(--space-lg) var(--space-xl);
             border: none;
+            border-radius: var(--radius-lg);
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            min-height: 48px;
+            font-family: var(--font-primary);
         }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
         .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
         }
+
         .btn:active {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transform: translateY(0);
         }
 
-        /* Specific Button Colors */
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn:disabled:hover {
+            transform: none;
+            box-shadow: var(--shadow-md);
+        }
+
         .btn-primary {
-            background-color: #0a7aff;
-            color: #ffffff;
-        }
-        .btn-primary:hover {
-            background-color: #0056b3;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-light) 100%);
+            color: var(--white);
+            box-shadow: var(--shadow-md);
         }
 
-        .btn-outline-secondary {
-            background-color: #ffffff;
-            color: #7f8c8d;
-            border: 2px solid #bdc3c7;
+        .btn-secondary {
+            background: var(--white);
+            color: var(--gray-700);
+            border: 2px solid var(--gray-300);
+            box-shadow: var(--shadow-sm);
         }
-        .btn-outline-secondary:hover {
-            background-color: #f8f9fa;
-            color: #5d6d7e;
-            border-color: #95a5a6;
+
+        .btn-secondary:hover {
+            background: var(--gray-50);
+            border-color: var(--primary-blue-light);
+            color: var(--primary-blue);
         }
 
         .btn-success {
-            background-color: #2ecc71;
-            color: #ffffff;
+            background: linear-gradient(135deg, var(--success) 0%, #10b981 100%);
+            color: var(--white);
+            box-shadow: var(--shadow-md);
         }
-        .btn-success:hover {
-            background-color: #27ae60;
+
+        .btn-warning {
+            background: linear-gradient(135deg, var(--warning) 0%, var(--accent-gold-light) 100%);
+            color: var(--white);
+            box-shadow: var(--shadow-md);
         }
 
         .btn-danger {
-            background-color: #e74c3c;
-            color: #ffffff;
+            background: linear-gradient(135deg, var(--error) 0%, #ef4444 100%);
+            color: var(--white);
+            box-shadow: var(--shadow-md);
         }
 
-        /* Instructions Card */
-        .instructions-card {
-            background-color: #f7f9fc;
-            border: 1px solid #e4e7ea;
-            border-radius: 12px;
-            padding: 30px;
-            margin-top: 30px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+        /* Progress Bar */
+        .progress-container {
+            display: none; /* Hide by default */
         }
-        .instructions-card h3 {
-            color: #0a7aff;
-            text-align: left;
-            margin-bottom: 20px;
+        
+        .progress-container.show {
+            display: block; /* Show when needed */
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-sm);
+        }
+
+        .progress-text {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--gray-700);
+        }
+
+        .progress-percentage {
+            font-size: 0.875rem;
             font-weight: 600;
+            color: var(--primary-blue);
         }
-        .instructions-card ul {
-            list-style: none;
-            padding-left: 0;
-            margin: 0;
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--gray-200);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
         }
-        .instructions-card li {
-            background-color: #ffffff;
-            border-bottom: 1px solid #ecf0f1;
-            padding: 12px 18px;
-            margin-bottom: 8px;
-            border-radius: 8px;
-            color: #34495e;
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-light) 100%);
+            border-radius: var(--radius-sm);
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .progress-stats {
+            margin-top: var(--space-sm);
+            display: flex;
+            gap: var(--space-lg);
+        }
+
+        .progress-stat {
+            font-size: 0.8125rem;
+            color: var(--gray-600);
+        }
+
+        .progress-stat strong {
+            color: var(--gray-800);
+        }
+
+        /* Output Area */
+        .output-box {
+            background: var(--gray-50);
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            min-height: 400px;
+            max-height: 600px;
+            font-family: var(--font-primary);
             font-size: 1rem;
-            line-height: 1.5;
+            line-height: 1.7;
+            color: var(--gray-800);
+            overflow-wrap: break-word;
+            overflow-y: auto;
+            transition: all 0.3s ease;
             position: relative;
         }
-        .instructions-card li:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-        }
-        .instructions-card li strong {
-            color: #2c3e50;
+
+        .output-box:focus-within {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            background: var(--white);
         }
 
-        /* Responsive adjustments */
+        .output-box p {
+            margin: 0;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            margin-bottom: var(--space-xs);
+        }
+
+        .output-box .heading-line {
+            font-weight: 600;
+            font-size: 1.0625rem;
+            color: var(--gray-800);
+            margin-bottom: var(--space-xs);
+        }
+
+        .output-box .placeholder {
+            text-align: center;
+            color: var(--gray-400);
+            font-style: italic;
+            padding: var(--space-3xl) var(--space-lg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                var(--gray-100) 10px,
+                var(--gray-100) 20px
+            );
+            opacity: 0.7;
+            border-radius: var(--radius-md);
+        }
+
+        /* Status Badge */
+        .status-badge {
+            position: absolute;
+            top: var(--space-lg);
+            right: var(--space-lg);
+            background: var(--success);
+            color: var(--white);
+            padding: var(--space-sm) var(--space-lg);
+            border-radius: var(--radius-lg);
+            font-size: 0.875rem;
+            font-weight: 500;
+            display: none;
+            align-items: center;
+            gap: var(--space-sm);
+            transition: all 0.3s ease;
+        }
+
+        .status-badge.show {
+            display: flex;
+        }
+
+        /* Performance Stats */
+        .perf-stats {
+            display: none;
+        }
+        
+        /* Instructions Panel */
+        .instructions-panel {
+            grid-column: 1 / -1;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            margin-top: var(--space-2xl);
+        }
+
+        .instructions-header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            color: var(--white);
+            padding: var(--space-xl);
+            text-align: center;
+        }
+
+        .instructions-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: var(--space-sm);
+        }
+
+        .instructions-subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .instructions-content {
+            padding: var(--space-xl);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-2xl);
+        }
+
+        .instruction-section h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: var(--space-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .instruction-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .instruction-item {
+            background: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            margin-bottom: var(--space-md);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .instruction-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-gold) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .instruction-item:hover {
+            transform: translateX(8px);
+            border-color: var(--primary-blue-light);
+            background: var(--white);
+        }
+
+        .instruction-item:hover::before {
+            opacity: 1;
+        }
+
+        .instruction-item strong {
+            color: var(--gray-800);
+            font-weight: 600;
+        }
+
+        .nested-list {
+            margin-top: var(--space-md);
+            padding-left: var(--space-lg);
+            border-left: 2px solid var(--gray-200);
+        }
+
+        .nested-list li {
+            margin-bottom: var(--space-sm);
+            color: var(--gray-600);
+            font-size: 0.9375rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--gray-800);
+            color: var(--gray-300);
+            padding: var(--space-xl) 0;
+            text-align: center;
+            margin-top: auto; /* Push footer to the bottom */
+            flex-shrink: 0;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--space-xl);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                gap: var(--space-xl);
+                padding: var(--space-xl);
+            }
+            
+            .instructions-content {
+                grid-template-columns: 1fr;
+                gap: var(--space-xl);
+            }
+        }
+
         @media (max-width: 768px) {
-            .container {
-                padding: 20px;
+            .header-top {
+                flex-direction: column;
+                gap: var(--space-lg);
+                text-align: center;
             }
-            h1 {
-                font-size: 1.8rem;
+            
+            .page-title h2 {
+                font-size: 2rem;
             }
-            .btn {
-                width: 100%;
-                min-width: unset;
-                font-size: 1rem;
-                padding: 12px 20px;
-            }
+            
             .button-group {
                 flex-direction: column;
-                gap: 12px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fadeInUp {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Focus Styles for Accessibility */
+        .btn:focus-visible,
+        .form-textarea:focus-visible,
+        .prefix-input:focus-visible {
+            outline: 2px solid var(--primary-blue);
+            outline-offset: 2px;
+        }
+
+        /* Print Styles */
+        @media print {
+            .header,
+            .instructions-panel,
+            .footer,
+            .button-group,
+            .progress-container,
+            .status-badge,
+            .perf-stats {
+                display: none;
+            }
+            
+            .main-container {
+                grid-template-columns: 1fr;
+                padding: 0;
+                margin: 0;
+            }
+            
+            .card {
+                box-shadow: none;
+                border: 1px solid var(--gray-300);
+            }
+            
+            .output-box {
+                max-height: none;
+                overflow: visible;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>ระบบจัดรูปแบบรายงานโครงงานอัตโนมัติ</h1>
-        <p class="description">วางข้อความรายงานของคุณในช่องด้านล่าง แล้วระบบจะจัดรูปแบบหัวข้อและเนื้อหาให้โดยอัตโนมัติ</p>
+    <header class="header">
+        <div class="header-content">
+            <div class="header-top">
+                <div class="logo-section">
+                    <div class="logo">🏛️</div>
+                    <div class="org-info">
+                        <h1>กรมพัฒนาเทคโนโลยีสารสนเทศ</h1>
+                        <p>กระทรวงดิจิทัลเพื่อเศรษฐกิจและสังคม</p>
+                    </div>
+                </div>
+                <div class="system-badge">
+                    ระบบทางการ
+                </div>
+            </div>
+            <div class="page-title">
+                <h2>ระบบจัดรูปแบบรายงานทางการอัตโนมัติ</h2>
+                <p>เครื่องมือมาตรฐานสำหรับจัดรูปแบบเอกสารราชการและรายงานวิชาการให้เป็นไปตามมาตรฐานที่กำหนด พร้อมระบบปรับปรุงหมายเลขข้อและการจัดเรียงเนื้อหาโดยอัตโนมัติ รองรับข้อความไม่จำกัดขนาด</p>
+            </div>
+        </div>
+    </header>
 
-        <div class="card-section">
-            <label for="inputText">ข้อความที่ต้องการจัดรูปแบบ:</label>
-            <textarea id="inputText" rows="10" placeholder="ตัวอย่าง:
+    <main class="main-container">
+        <div class="card animate-fadeInUp">
+            <div class="card-header">
+                <h3 class="card-title">
+                    📝 ข้อมูลต้นฉบับ
+                </h3>
+                <p class="card-subtitle">กรอกข้อความที่ต้องการจัดรูปแบบตามมาตรฐานเอกสารราชการ (รองรับข้อความไม่จำกัดขนาด)</p>
+            </div>
+            <div class="card-body">
+                <div class="progress-container" id="progressContainer">
+                    <div class="progress-info">
+                        <span class="progress-text">กำลังประมวลผล...</span>
+                        <span class="progress-percentage">...</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="prefix-control">
+                        <label for="sectionPrefix" class="prefix-label">เลขข้อใหญ่นำหน้า (ไม่บังคับ)</label>
+                        <input type="number" id="sectionPrefix" class="prefix-input" min="1" max="99" placeholder="เช่น 2" title="ใส่เลขข้อใหญ่ที่ต้องการเพิ่มข้างหน้า">
+                        <div class="prefix-example">
+                            <small><strong>ตัวอย่าง:</strong> ใส่ "2" จะทำให้ 1.1 → 2.1.1, 1.1.1 → 2.1.1.1</small>
+                        </div>
+                    </div>
+                    
+                    <label for="inputText" class="form-label">เนื้อหาเอกสาร</label>
+                    <textarea id="inputText" class="form-textarea" 
+                              placeholder="ตัวอย่างการใช้งาน:
 
 1. บทนำ
-โครงงานนี้มีวัตถุประสงค์เพื่อศึกษา...
-1.1 ความเป็นมาและความสำคัญ
-ปัญหาที่พบคือ...
-ในส่วนนี้จะกล่าวถึงที่มา...
+โครงงานนี้มีวัตถุประสงค์เพื่อศึกษาและพัฒนาระบบสารสนเทศที่มีประสิทธิภาพ โดยมุ่งเน้นการใช้เทคโนโลยีสมัยใหม่ในการแก้ไขปัญหาที่เกิดขึ้นในองค์กร
+
+1.1 ความเป็นมาและความสำคัญของปัญหา
+ในปัจจุบันองค์กรต่างๆ ต้องเผชิญกับปัญหาการจัดการข้อมูลที่มีปริมาณมากและซับซ้อน ทำให้เกิดความไม่มีประสิทธิภาพในการดำเนินงาน
+
 1.1.1 สภาพปัญหาปัจจุบัน
-ในปัจจุบัน...
-ผลกระทบคือ...
-1.1.1.1 ข้อมูลเพิ่มเติม
-ข้อมูลรายละเอียด...
-1.2 วัตถุประสงค์ของโครงงาน
-1.2.1 เพื่อพัฒนา...
-เพื่อให้ได้ผลลัพธ์ที่ดีที่สุด...
-2. การทบทวนวรรณกรรม
-ในส่วนนี้ได้รวบรวมงานวิจัยและแนวคิดที่เกี่ยวข้องกับการพัฒนาโครงงาน...
-"></textarea>
-            <div class="button-group">
-                <button class="btn btn-primary" onclick="formatText()">
-                    ✨ จัดรูปแบบอัตโนมัติ
-                </button>
-                <button class="btn btn-outline-secondary" onclick="copyOutput()" id="copyButton">
-                    📋 คัดลอกผลลัพธ์
-                </button>
-                <button class="btn btn-success" onclick="saveAsTxt()">
-                    📄 บันทึกเป็น .txt
-                </button>
+ระบบเดิมที่ใช้อยู่มีข้อจำกัดในหลายด้าน ไม่สามารถรองรับข้อมูลที่เพิ่มขึ้นอย่างรวดเร็ว
+
+1.1.1.1 ผลกระทบที่เกิดขึ้น
+ส่งผลให้เกิดความล่าช้าในการประมวลผลข้อมูล และการตัดสินใจที่ไม่ทันต่อเหตุการณ์
+
+1.2 วัตถุประสงค์ของการศึกษา
+1.2.1 เพื่อพัฒนาระบบสารสนเทศที่มีประสิทธิภาพสูง
+การพัฒนาระบบใหม่จะช่วยเพิ่มประสิทธิภาพในการทำงานและลดข้อผิดพลาดที่อาจเกิดขึ้น
+
+2. การทบทวนวรรณกรรมและงานวิจัยที่เกี่ยวข้อง
+ในส่วนนี้ได้รวบรวมงานวิจัยและแนวคิดทฤษฎีที่เกี่ยวข้องกับการพัฒนาระบบสารสนเทศ เพื่อใช้เป็นแนวทางในการดำเนินการศึกษาวิจัย
+
+** สามารถใส่ข้อความได้ไม่จำกัดจำนวน - รองรับเอกสารขนาดใหญ่หลายล้านตัวอักษร **"
+                              spellcheck="false"
+                              autocomplete="off"
+                              wrap="soft"></textarea>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="formatText()" id="formatButton">
+                        ✨ จัดรูปแบบอัตโนมัติ
+                    </button>
+                    <button class="btn btn-secondary" onclick="copyOutput()" id="copyButton">
+                        📋 คัดลอกผลลัพธ์
+                    </button>
+                    <button class="btn btn-success" onclick="saveAsTxt()">
+                        💾 บันทึกเป็นไฟล์
+                    </button>
+                </div>
             </div>
         </div>
 
-        <h2>ผลลัพธ์การจัดรูปแบบ:</h2>
-        <div class="output-box" id="output" contenteditable="true">
-            <p class="placeholder">ผลลัพธ์จะปรากฏที่นี่หลังจากที่คุณกดปุ่ม "จัดรูปแบบอัตโนมัติ"</p>
+        <div class="card animate-fadeInUp">
+            <div class="card-header">
+                <h3 class="card-title">
+                    📄 ผลลัพธ์การจัดรูปแบบ
+                </h3>
+                <p class="card-subtitle">เอกสารที่ผ่านการจัดรูปแบบตามมาตรฐานแล้ว พร้อมสำหรับการใช้งาน</p>
+            </div>
+            <div class="card-body">
+                <div class="status-badge" id="statusBadge">
+                    ✅ พร้อมใช้งาน
+                </div>
+                
+                <div class="output-box" id="output" contenteditable="true">
+                    <div class="placeholder">
+                        กรุณากรอกข้อความในช่องด้านซ้าย แล้วกดปุ่ม "จัดรูปแบบอัตโนมัติ" เพื่อเริ่มต้นการใช้งานระบบ<br>
+                        <br>
+                        <strong>ระบบรองรับ:</strong><br>
+                        ✅ ข้อความไม่จำกัดขนาด<br>
+                        ✅ ความเร็วสูงและเสถียร
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="instructions-card">
-            <h3>คำแนะนำการใช้งาน:</h3>
-            <ul>
-                <li>หลังจากจัดรูปแบบอัตโนมัติแล้ว คุณสามารถ **คลิกและแก้ไขข้อความในกล่องผลลัพธ์ได้โดยตรง**</li>
-                <li>ระบบจะตรวจจับหัวข้อจากตัวเลขที่นำหน้า ตามด้วยจุด **และอาจจะมีหรือไม่มีจุดปิดท้ายก็ได้** เช่น "1.", "1.1 หัวข้อ", "1.1.1 รายละเอียด"</li>
-                <li>**ทุกข้อความจะใช้ฟอนต์ 'TH Sarabun PSK' (หรือ 'TH Sarabun New', 'Sarabun') และขนาด 16px**</li>
-                <li>**บรรทัดที่เป็นหัวข้อ** จะเป็น **ตัวหนา** และจะเยื้องด้วย **Spacebar จริงๆ** ตามระดับหัวข้อนั้นๆ (เช่น 0, 4, 8 Spacebar)</li>
-                <li>**ข้อความเนื้อหาทั่วไปที่ตามหลังหัวข้อมา** จะเป็น **ตัวบาง (ปกติ)** และ **จะไม่ถูกเยื้อง** (เยื้อง 0 Spacebar)</li>
-                <li>**ระบบจะลบบรรทัดว่างเปล่าออกทั้งหมด** ทำให้ผลลัพธ์ไม่มีช่องว่างระหว่างย่อหน้า</li>
-                <li>โปรดตรวจสอบความถูกต้องของผลลัพธ์และปรับแก้ตามความเหมาะสม</li>
-            </ul>
-            <h3 style="margin-top: 25px;">เกี่ยวกับปุ่มคัดลอก/บันทึก:</h3>
-            <ul>
-                <li>**คัดลอกผลลัพธ์:**
-                    <ul>
-                        <li>ปุ่มนี้จะคัดลอก **ข้อความในกล่องผลลัพธ์ทั้งหมด** (รวมถึง Spacebar ที่ใช้เยื้อง) ซึ่งเป็นรูปแบบ HTML ที่มี `&nbsp;` เพื่อการเว้นวรรค</li>
-                        <li>**เมื่อนำไปวางใน Microsoft Word:** แนะนำให้ใช้ `Ctrl+V` หรือ `คลิกขวา > Paste > Keep Source Formatting` หรือ `Merge Formatting` Word จะสามารถตีความและจัดรูปแบบได้อย่างถูกต้องครับ</li>
-                        <li>**เมื่อนำไปวางในโปรแกรมแก้ไขข้อความทั่วไป (Plain Text):** โปรแกรมจะแปลง `&nbsp;` เป็น Spacebar ปกติให้เองครับ</li>
+        <div class="instructions-panel animate-fadeInUp">
+            <div class="instructions-header">
+                <h3 class="instructions-title">คู่มือการใช้งานระบบ</h3>
+                <p class="instructions-subtitle">แนวทางและข้อกำหนดสำหรับการใช้งานระบบจัดรูปแบบเอกสารทางการ</p>
+            </div>
+            <div class="instructions-content">
+                <div class="instruction-section">
+                    <h4>🚀 ความสามารถของระบบ</h4>
+                    <ul class="instruction-list">
+                        <li class="instruction-item">
+                            <strong>ประมวลผลไม่จำกัดขนาด:</strong> ระบบสามารถประมวลผลเอกสารขนาดใหญ่โดยไม่มีปัญหา
+                        </li>
+                        <li class="instruction-item">
+                            <strong>การแก้ไขผลลัพธ์:</strong> หลังจากจัดรูปแบบแล้ว สามารถคลิกและแก้ไขข้อความในกล่องผลลัพธ์ได้โดยตรง
+                        </li>
+                        <li class="instruction-item">
+                            <strong>เลขข้อใหญ่นำหน้า:</strong> ใส่เลขในช่อง "เลขข้อใหญ่นำหน้า" เพื่อเพิ่มหมายเลขข้อหลักข้างหน้าหัวข้อทั้งหมดโดยอัตโนมัติ
+                        </li>
                     </ul>
-                </li>
-                <li>**บันทึกเป็น .txt:**
-                    <ul>
-                        <li>จะบันทึกเป็นไฟล์ข้อความธรรมดา (.txt) โดยมี Spacebar นําหน้าตามการเยื้อง (ซึ่งแปลงมาจาก `&nbsp;` ใน HTML)</li>
+                </div>
+
+                <div class="instruction-section">
+                    <h4>📋 มาตรฐานการจัดรูปแบบ</h4>
+                    <ul class="instruction-list">
+                        <li class="instruction-item">
+                            <strong>ฟอนต์และขนาด:</strong> ใช้ฟอนต์ 'TH Sarabun PSK' หรือ 'Sarabun' ขนาด 16px ตามมาตรฐานเอกสารราชการ
+                        </li>
+                        <li class="instruction-item">
+                            <strong>การเยื้องข้อความ:</strong>
+                            <ul class="nested-list">
+                                <li>หัวข้อระดับ 1 (1.) = ไม่เยื้อง</li>
+                                <li>หัวข้อระดับ 2 (1.1) = เยื้อง 4 ช่องว่าง</li>
+                                <li>หัวข้อระดับ 3 (1.1.1) = เยื้อง 8 ช่องว่าง</li>
+                                <li>เนื้อหาทั่วไป = ไม่เยื้อง</li>
+                            </ul>
+                        </li>
+                        <li class="instruction-item">
+                            <strong>น้ำหนักตัวอักษร:</strong> หัวข้อจะเป็นตัวหนา เนื้อหาทั่วไปจะเป็นตัวปกติ
+                        </li>
                     </ul>
-                </li>
-            </ul>
+                </div>
+                <div class="instruction-section">
+                    <h4>💾 การส่งออกและบันทึก</h4>
+                    <ul class="instruction-list">
+                        <li class="instruction-item">
+                            <strong>คัดลอกผลลัพธ์:</strong> คัดลอกข้อความพร้อมการจัดรูปแบบสำหรับนำไปใช้ใน Microsoft Word
+                        </li>
+                        <li class="instruction-item">
+                            <strong>บันทึกเป็นไฟล์:</strong> บันทึกเป็นไฟล์ข้อความธรรมดา (.txt) พร้อมการเยื้องที่ถูกต้อง
+                        </li>
+                    </ul>
+                </div>
+                <div class="instruction-section">
+                    <h4>⚡ คำสั่งลัด</h4>
+                    <ul class="instruction-list">
+                        <li class="instruction-item">
+                            <strong>Ctrl + Enter:</strong> จัดรูปแบบอัตโนมัติ
+                        </li>
+                        <li class="instruction-item">
+                            <strong>Ctrl + S:</strong> บันทึกเป็นไฟล์
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-    </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 กรมพัฒนาเทคโนโลยีสารสนเทศ กระทรวงดิจิทัลเพื่อเศรษฐกิจและสังคม | ระบบจัดรูปแบบเอกสารทางการ</p>
+        </div>
+    </footer>
 
     <script>
-        // No longer needed as formatText directly adds &nbsp; and we copy innerHTML/innerText
-        // function getPlainTextWithIndentationsFromOutput() { ... } 
-
-        function formatText() {
-            const inputText = document.getElementById('inputText').value;
-            const outputDiv = document.getElementById('output');
+        // DOM Elements
+        const inputText = document.getElementById('inputText');
+        const outputDiv = document.getElementById('output');
+        const sectionPrefixInput = document.getElementById('sectionPrefix');
+        const statusBadge = document.getElementById('statusBadge');
+        const copyButton = document.getElementById('copyButton');
+        const saveButton = document.querySelector('.btn-success');
+        
+        // Show status message function
+        const showStatus = (message, type = 'info') => {
+            statusBadge.textContent = message;
+            statusBadge.className = `status-badge show`;
+            
+            switch (type) {
+                case 'success':
+                    statusBadge.style.backgroundColor = 'var(--success)';
+                    break;
+                case 'error':
+                    statusBadge.style.backgroundColor = 'var(--error)';
+                    break;
+                case 'warning':
+                    statusBadge.style.backgroundColor = 'var(--warning)';
+                    break;
+                default:
+                    statusBadge.style.backgroundColor = 'var(--info)';
+            }
+            
+            setTimeout(() => {
+                statusBadge.classList.remove('show');
+            }, 3000);
+        };
+        
+        // Function to format the text
+        const formatText = () => {
+            const inputTextValue = inputText.value;
+            const sectionPrefix = sectionPrefixInput.value;
+            
+            if (!inputTextValue.trim()) {
+                outputDiv.innerHTML = `<div class="placeholder">กรุณากรอกข้อความในช่องด้านซ้าย แล้วกดปุ่ม "จัดรูปแบบอัตโนมัติ" เพื่อเริ่มต้นการใช้งานระบบ<br><br><strong>ระบบรองรับ:</strong><br>✅ ข้อความไม่จำกัดขนาด<br>✅ ความเร็วสูงและเสถียร</div>`;
+                showStatus('❌ กรุณากรอกข้อความก่อน', 'error');
+                return;
+            }
+            
             let outputHtml = '';
+            const lines = inputTextValue.split('\n');
+            const headingPattern = /^(\d+(\.\d+)*\.?)(\s*)(.*)$/;
             
-            const lines = inputText.split('\n');
-            
-            const headingPattern = /^(\d+(\.\d+)*\.?)(\s*)(.*)$/; 
-
             lines.forEach(line => {
                 const trimmedLine = line.trim();
-
-                // ลบบรรทัดว่างเปล่าออกโดยไม่เพิ่มอะไรเลย
-                if (trimmedLine === '') {
-                    return; 
-                }
-
+                
+                if (trimmedLine === '') return;
+                
                 const match = trimmedLine.match(headingPattern);
-
+                
                 if (match) {
-                    const headingNumber = match[1];
+                    let headingNumber = match[1];
                     const headingContent = match[4];
                     
-                    const parts = headingNumber.split('.').filter(Boolean); 
+                    // Apply section prefix if provided
+                    if (sectionPrefix && sectionPrefix.trim() !== '') {
+                        const prefixNum = parseInt(sectionPrefix.trim());
+                        if (!isNaN(prefixNum) && prefixNum > 0) {
+                            headingNumber = prefixNum + '.' + headingNumber;
+                        }
+                    }
+                    
+                    const parts = headingNumber.split('.').filter(Boolean);
                     const detectedHeadingLevel = parts.length;
-
-                    // Calculate actual number of &nbsp; characters for indentation
-                    const numSpaces = (detectedHeadingLevel > 0) ? (detectedHeadingLevel - 1) * 4 : 0; 
+                    const numSpaces = (detectedHeadingLevel > 0) ? (detectedHeadingLevel - 1) * 4 : 0;
                     const indentation = '&nbsp;'.repeat(numSpaces);
-
-                    // Heading: Bold, with &nbsp; for indentation, and pre-wrap for proper space display
+                    
                     outputHtml += `<p class="heading-line" style="white-space: pre-wrap;">${indentation}${headingNumber} ${headingContent}</p>`;
                 } else {
-                    // Content: Normal font-weight, no indentation
                     outputHtml += `<p style="white-space: pre-wrap;">${trimmedLine}</p>`;
                 }
             });
             
             outputDiv.innerHTML = outputHtml;
-            // No need to reset white-space on outputDiv, it's now on the p tags.
-        }
-
-        // Function to copy current HTML output (which now includes &nbsp; for spacing)
-        function copyOutput() {
-            const outputDiv = document.getElementById('output');
-            
-            // We want to copy the rich text content (HTML with &nbsp; and bold tags)
-            // Selecting content directly from the editable div usually sends rich text to clipboard.
-            const range = document.createRange();
-            range.selectNodeContents(outputDiv);
-            const selection = window.getSelection();
-            selection.removeAllRanges();
-            selection.addRange(range);
-
-            const copyButton = document.getElementById('copyButton');
-            const originalText = copyButton.innerHTML;
-            const originalClass = copyButton.className;
-
-            try {
-                // document.execCommand('copy') on selected content generally works for rich text
-                const successful = document.execCommand('copy');
-
-                if (successful) {
-                    copyButton.innerHTML = '✅ คัดลอกแล้ว!';
-                    copyButton.className = 'btn btn-success'; 
-                } else {
-                    copyButton.innerHTML = '❌ คัดลอกไม่สำเร็จ';
-                    copyButton.className = 'btn btn-danger';
-                }
-
-                setTimeout(() => {
-                    copyButton.innerHTML = originalText;
-                    copyButton.className = originalClass; 
-                    selection.removeAllRanges(); // Deselect after message disappears
-                }, 2000); 
-            } catch (err) {
-                console.error('Failed to copy text:', err);
-                copyButton.innerHTML = '❌ คัดลอกไม่สำเร็จ';
-                copyButton.className = 'btn btn-danger';
-                setTimeout(() => {
-                    copyButton.innerHTML = originalText;
-                    copyButton.className = originalClass;
-                    selection.removeAllRanges(); // Deselect after message disappears
-                }, 2000);
+            showStatus('✅ จัดรูปแบบเสร็จสิ้น', 'success');
+        };
+        
+        // Function to copy output to clipboard
+        const copyOutput = async () => {
+            if (!outputDiv.textContent.trim() || outputDiv.querySelector('.placeholder')) {
+                showStatus('❌ ไม่มีข้อมูลให้คัดลอก', 'error');
+                return;
             }
-        }
+            
+            try {
+                // Use the modern Clipboard API
+                await navigator.clipboard.writeText(outputDiv.innerText);
+                
+                const originalText = copyButton.innerHTML;
+                copyButton.innerHTML = '✅ คัดลอกแล้ว!';
+                copyButton.className = 'btn btn-success';
+                
+                showStatus('✅ คัดลอกข้อมูลสำเร็จ', 'success');
+                
+                setTimeout(() => {
+                    copyButton.innerHTML = originalText;
+                    copyButton.className = 'btn btn-secondary';
+                }, 2500);
+            } catch (err) {
+                console.error('Failed to copy:', err);
+                showStatus('❌ ไม่สามารถคัดลอกได้', 'error');
+            }
+        };
+        
+        // Function to save output as a text file
+        const saveAsTxt = () => {
+            const textToSave = outputDiv.innerText;
+            
+            if (!textToSave.trim() || outputDiv.querySelector('.placeholder')) {
+                showStatus('❌ ไม่มีข้อมูลให้บันทึก', 'error');
+                return;
+            }
+            
+            try {
+                const blob = new Blob([textToSave], { type: 'text/plain;charset=utf-8' });
+                const link = document.createElement('a');
+                
+                const timestamp = new Date().toLocaleString('th-TH', {
+                    year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'
+                }).replace(/[/:]/g, '-');
+                
+                link.href = URL.createObjectURL(blob);
+                link.download = `เอกสารทางการ_${timestamp}.txt`;
+                
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                URL.revokeObjectURL(link.href);
+                
+                showStatus('💾 บันทึกไฟล์สำเร็จ', 'success');
+            } catch (err) {
+                console.error('Failed to save file:', err);
+                showStatus('❌ ไม่สามารถบันทึกไฟล์ได้', 'error');
+            }
+        };
 
-        // Function to save output as .txt (extracts plain text from HTML)
-        function saveAsTxt() {
-            const outputDiv = document.getElementById('output');
-            // innerText automatically converts &nbsp; to normal spaces and strips other HTML tags.
-            const textToSave = outputDiv.innerText; 
+        // Add event listeners
+        document.getElementById('formatButton').addEventListener('click', formatText);
+        copyButton.addEventListener('click', copyOutput);
+        saveButton.addEventListener('click', saveAsTxt);
 
-            const blob = new Blob([textToSave], { type: 'text/plain;charset=utf-8' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'รายงานโครงงาน.txt';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(link.href);
-        }
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                e.preventDefault();
+                formatText();
+            }
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                e.preventDefault();
+                saveAsTxt();
+            }
+        });
 
-        // Removed copyHtmlForWord() as copyOutput() now handles rich text copy effectively
-        // No longer generating .doc file as direct HTML copy to clipboard is more reliable.
+        // Auto-resize textarea
+        inputText.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = this.scrollHeight + 'px';
+        });
+        
     </script>
 </body>
 </html>
