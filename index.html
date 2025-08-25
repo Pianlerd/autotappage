@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>จัดรูปแบบรายงานอัตโนมัติ</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600&display=swap');
+        
+        /* General Styles */
+        body {
+            font-family: 'Sarabun', 'TH Sarabun PSK', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            color: #34495e;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 30px 40px;
+            box-sizing: border-box;
+        }
+
+        h1, h2, h3 {
+            color: #0a7aff;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            letter-spacing: -0.5px;
+        }
+
+        p.description {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        /* Input and Output Box Styles */
+        .card-section {
+            background-color: #fcfdff;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 250px;
+            padding: 15px;
+            border: 1px solid #bdc3c7;
+            border-radius: 10px;
+            font-size: 1rem;
+            line-height: 1.6;
+            resize: vertical;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            font-family: 'Sarabun', 'TH Sarabun PSK', sans-serif;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #0a7aff;
+            box-shadow: 0 0 0 4px rgba(10, 122, 255, 0.15);
+        }
+
+        .output-box {
+            background-color: #f9f9fb;
+            border: 1px solid #ced4da;
+            border-radius: 10px;
+            padding: 25px;
+            min-height: 200px;
+            overflow-x: auto;
+            word-wrap: break-word;
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #2c3e50;
+            user-select: text;
+            font-family: 'Sarabun', 'TH Sarabun PSK', sans-serif;
+            font-weight: 400; /* Regular weight for content */
+        }
+        .output-box p {
+            margin: 0;
+            line-height: 1.7;
+            font-weight: inherit;
+            white-space: pre-wrap;
+        }
+        .output-box p.heading-line {
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: #2c3e50;
+        }
+        .output-box p.placeholder {
+            text-align: center;
+            color: #95a5a6;
+            font-style: italic;
+            padding-top: 50px;
+        }
+
+        /* Button Styles */
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 25px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 14px 30px;
+            border-radius: 50px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 180px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: none;
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        .btn:active {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Specific Button Colors */
+        .btn-primary {
+            background-color: #0a7aff;
+            color: #ffffff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-outline-secondary {
+            background-color: #ffffff;
+            color: #7f8c8d;
+            border: 2px solid #bdc3c7;
+        }
+        .btn-outline-secondary:hover {
+            background-color: #f8f9fa;
+            color: #5d6d7e;
+            border-color: #95a5a6;
+        }
+
+        .btn-success {
+            background-color: #2ecc71;
+            color: #ffffff;
+        }
+        .btn-success:hover {
+            background-color: #27ae60;
+        }
+
+        .btn-danger {
+            background-color: #e74c3c;
+            color: #ffffff;
+        }
+
+        /* Instructions Card */
+        .instructions-card {
+            background-color: #f7f9fc;
+            border: 1px solid #e4e7ea;
+            border-radius: 12px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+        }
+        .instructions-card h3 {
+            color: #0a7aff;
+            text-align: left;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .instructions-card ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        .instructions-card li {
+            background-color: #ffffff;
+            border-bottom: 1px solid #ecf0f1;
+            padding: 12px 18px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            color: #34495e;
+            font-size: 1rem;
+            line-height: 1.5;
+            position: relative;
+        }
+        .instructions-card li:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        .instructions-card li strong {
+            color: #2c3e50;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .btn {
+                width: 100%;
+                min-width: unset;
+                font-size: 1rem;
+                padding: 12px 20px;
+            }
+            .button-group {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ระบบจัดรูปแบบรายงานโครงงานอัตโนมัติ</h1>
+        <p class="description">วางข้อความรายงานของคุณในช่องด้านล่าง แล้วระบบจะจัดรูปแบบหัวข้อและเนื้อหาให้โดยอัตโนมัติ</p>
+
+        <div class="card-section">
+            <label for="inputText">ข้อความที่ต้องการจัดรูปแบบ:</label>
+            <textarea id="inputText" rows="10" placeholder="ตัวอย่าง:
+
+1. บทนำ
+โครงงานนี้มีวัตถุประสงค์เพื่อศึกษา...
+1.1 ความเป็นมาและความสำคัญ
+ปัญหาที่พบคือ...
+ในส่วนนี้จะกล่าวถึงที่มา...
+1.1.1 สภาพปัญหาปัจจุบัน
+ในปัจจุบัน...
+ผลกระทบคือ...
+1.1.1.1 ข้อมูลเพิ่มเติม
+ข้อมูลรายละเอียด...
+1.2 วัตถุประสงค์ของโครงงาน
+1.2.1 เพื่อพัฒนา...
+เพื่อให้ได้ผลลัพธ์ที่ดีที่สุด...
+2. การทบทวนวรรณกรรม
+ในส่วนนี้ได้รวบรวมงานวิจัยและแนวคิดที่เกี่ยวข้องกับการพัฒนาโครงงาน...
+"></textarea>
+            <div class="button-group">
+                <button class="btn btn-primary" onclick="formatText()">
+                    ✨ จัดรูปแบบอัตโนมัติ
+                </button>
+                <button class="btn btn-outline-secondary" onclick="copyOutput()" id="copyButton">
+                    📋 คัดลอกผลลัพธ์
+                </button>
+                <button class="btn btn-success" onclick="saveAsTxt()">
+                    📄 บันทึกเป็น .txt
+                </button>
+            </div>
+        </div>
+
+        <h2>ผลลัพธ์การจัดรูปแบบ:</h2>
+        <div class="output-box" id="output" contenteditable="true">
+            <p class="placeholder">ผลลัพธ์จะปรากฏที่นี่หลังจากที่คุณกดปุ่ม "จัดรูปแบบอัตโนมัติ"</p>
+        </div>
+
+        <div class="instructions-card">
+            <h3>คำแนะนำการใช้งาน:</h3>
+            <ul>
+                <li>หลังจากจัดรูปแบบอัตโนมัติแล้ว คุณสามารถ **คลิกและแก้ไขข้อความในกล่องผลลัพธ์ได้โดยตรง**</li>
+                <li>ระบบจะตรวจจับหัวข้อจากตัวเลขที่นำหน้า ตามด้วยจุด **และอาจจะมีหรือไม่มีจุดปิดท้ายก็ได้** เช่น "1.", "1.1 หัวข้อ", "1.1.1 รายละเอียด"</li>
+                <li>**ทุกข้อความจะใช้ฟอนต์ 'TH Sarabun PSK' (หรือ 'TH Sarabun New', 'Sarabun') และขนาด 16px**</li>
+                <li>**บรรทัดที่เป็นหัวข้อ** จะเป็น **ตัวหนา** และจะเยื้องด้วย **Spacebar จริงๆ** ตามระดับหัวข้อนั้นๆ (เช่น 0, 4, 8 Spacebar)</li>
+                <li>**ข้อความเนื้อหาทั่วไปที่ตามหลังหัวข้อมา** จะเป็น **ตัวบาง (ปกติ)** และ **จะไม่ถูกเยื้อง** (เยื้อง 0 Spacebar)</li>
+                <li>**ระบบจะลบบรรทัดว่างเปล่าออกทั้งหมด** ทำให้ผลลัพธ์ไม่มีช่องว่างระหว่างย่อหน้า</li>
+                <li>โปรดตรวจสอบความถูกต้องของผลลัพธ์และปรับแก้ตามความเหมาะสม</li>
+            </ul>
+            <h3 style="margin-top: 25px;">เกี่ยวกับปุ่มคัดลอก/บันทึก:</h3>
+            <ul>
+                <li>**คัดลอกผลลัพธ์:**
+                    <ul>
+                        <li>ปุ่มนี้จะคัดลอก **ข้อความในกล่องผลลัพธ์ทั้งหมด** (รวมถึง Spacebar ที่ใช้เยื้อง) ซึ่งเป็นรูปแบบ HTML ที่มี `&nbsp;` เพื่อการเว้นวรรค</li>
+                        <li>**เมื่อนำไปวางใน Microsoft Word:** แนะนำให้ใช้ `Ctrl+V` หรือ `คลิกขวา > Paste > Keep Source Formatting` หรือ `Merge Formatting` Word จะสามารถตีความและจัดรูปแบบได้อย่างถูกต้องครับ</li>
+                        <li>**เมื่อนำไปวางในโปรแกรมแก้ไขข้อความทั่วไป (Plain Text):** โปรแกรมจะแปลง `&nbsp;` เป็น Spacebar ปกติให้เองครับ</li>
+                    </ul>
+                </li>
+                <li>**บันทึกเป็น .txt:**
+                    <ul>
+                        <li>จะบันทึกเป็นไฟล์ข้อความธรรมดา (.txt) โดยมี Spacebar นําหน้าตามการเยื้อง (ซึ่งแปลงมาจาก `&nbsp;` ใน HTML)</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // No longer needed as formatText directly adds &nbsp; and we copy innerHTML/innerText
+        // function getPlainTextWithIndentationsFromOutput() { ... } 
+
+        function formatText() {
+            const inputText = document.getElementById('inputText').value;
+            const outputDiv = document.getElementById('output');
+            let outputHtml = '';
+            
+            const lines = inputText.split('\n');
+            
+            const headingPattern = /^(\d+(\.\d+)*\.?)(\s*)(.*)$/; 
+
+            lines.forEach(line => {
+                const trimmedLine = line.trim();
+
+                // ลบบรรทัดว่างเปล่าออกโดยไม่เพิ่มอะไรเลย
+                if (trimmedLine === '') {
+                    return; 
+                }
+
+                const match = trimmedLine.match(headingPattern);
+
+                if (match) {
+                    const headingNumber = match[1];
+                    const headingContent = match[4];
+                    
+                    const parts = headingNumber.split('.').filter(Boolean); 
+                    const detectedHeadingLevel = parts.length;
+
+                    // Calculate actual number of &nbsp; characters for indentation
+                    const numSpaces = (detectedHeadingLevel > 0) ? (detectedHeadingLevel - 1) * 4 : 0; 
+                    const indentation = '&nbsp;'.repeat(numSpaces);
+
+                    // Heading: Bold, with &nbsp; for indentation, and pre-wrap for proper space display
+                    outputHtml += `<p class="heading-line" style="white-space: pre-wrap;">${indentation}${headingNumber} ${headingContent}</p>`;
+                } else {
+                    // Content: Normal font-weight, no indentation
+                    outputHtml += `<p style="white-space: pre-wrap;">${trimmedLine}</p>`;
+                }
+            });
+            
+            outputDiv.innerHTML = outputHtml;
+            // No need to reset white-space on outputDiv, it's now on the p tags.
+        }
+
+        // Function to copy current HTML output (which now includes &nbsp; for spacing)
+        function copyOutput() {
+            const outputDiv = document.getElementById('output');
+            
+            // We want to copy the rich text content (HTML with &nbsp; and bold tags)
+            // Selecting content directly from the editable div usually sends rich text to clipboard.
+            const range = document.createRange();
+            range.selectNodeContents(outputDiv);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+
+            const copyButton = document.getElementById('copyButton');
+            const originalText = copyButton.innerHTML;
+            const originalClass = copyButton.className;
+
+            try {
+                // document.execCommand('copy') on selected content generally works for rich text
+                const successful = document.execCommand('copy');
+
+                if (successful) {
+                    copyButton.innerHTML = '✅ คัดลอกแล้ว!';
+                    copyButton.className = 'btn btn-success'; 
+                } else {
+                    copyButton.innerHTML = '❌ คัดลอกไม่สำเร็จ';
+                    copyButton.className = 'btn btn-danger';
+                }
+
+                setTimeout(() => {
+                    copyButton.innerHTML = originalText;
+                    copyButton.className = originalClass; 
+                    selection.removeAllRanges(); // Deselect after message disappears
+                }, 2000); 
+            } catch (err) {
+                console.error('Failed to copy text:', err);
+                copyButton.innerHTML = '❌ คัดลอกไม่สำเร็จ';
+                copyButton.className = 'btn btn-danger';
+                setTimeout(() => {
+                    copyButton.innerHTML = originalText;
+                    copyButton.className = originalClass;
+                    selection.removeAllRanges(); // Deselect after message disappears
+                }, 2000);
+            }
+        }
+
+        // Function to save output as .txt (extracts plain text from HTML)
+        function saveAsTxt() {
+            const outputDiv = document.getElementById('output');
+            // innerText automatically converts &nbsp; to normal spaces and strips other HTML tags.
+            const textToSave = outputDiv.innerText; 
+
+            const blob = new Blob([textToSave], { type: 'text/plain;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'รายงานโครงงาน.txt';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(link.href);
+        }
+
+        // Removed copyHtmlForWord() as copyOutput() now handles rich text copy effectively
+        // No longer generating .doc file as direct HTML copy to clipboard is more reliable.
+    </script>
+</body>
+</html>
