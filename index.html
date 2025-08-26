@@ -6,8 +6,36 @@
     <title>ระบบจัดรูปแบบรายงานทางการ - กรมพัฒนาเทคโนโลยีสารสนเทศ</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        @font-face {
+            font-family: 'TH Sarabun PSK';
+            font-style: normal;
+            font-weight: 400;
+            src: url('https://fonts.thai-sarabun.com/THSarabun-webfont.woff') format('woff');
+        }
+
+        @font-face {
+            font-family: 'TH Sarabun PSK';
+            font-style: normal;
+            font-weight: 700;
+            src: url('https://fonts.thai-sarabun.com/THSarabun-Bold-webfont.woff') format('woff');
+        }
+
+        @font-face {
+            font-family: 'TH Sarabun PSK';
+            font-style: italic;
+            font-weight: 400;
+            src: url('https://fonts.thai-sarabun.com/THSarabun-Italic-webfont.woff') format('woff');
+        }
+
+        @font-face {
+            font-family: 'TH Sarabun PSK';
+            font-style: italic;
+            font-weight: 700;
+            src: url('https://fonts.thai-sarabun.com/THSarabun-BoldItalic-webfont.woff') format('woff');
+        }
+
         :root {
             /* Official Color Palette */
             --primary-blue: #1e3a8a;
@@ -37,8 +65,7 @@
             --info: #0284c7;
             
             /* Typography */
-            --font-primary: 'Sarabun', 'TH Sarabun PSK', sans-serif;
-            --font-secondary: 'Inter', system-ui, sans-serif;
+            --font-primary: 'TH Sarabun PSK', 'Sarabun', sans-serif;
             
             /* Spacing */
             --space-xs: 0.25rem;
@@ -76,9 +103,8 @@
             font-family: var(--font-primary);
             background: linear-gradient(135deg, var(--gray-50) 0%, var(--gray-100) 100%);
             color: var(--gray-800);
-            line-height: 1.6;
             min-height: 100vh;
-            font-size: 16px;
+            font-size: 16pt; /* ใช้ pt แทน px สำหรับมาตรฐานงานเอกสาร */
             display: flex;
             flex-direction: column;
         }
@@ -182,7 +208,6 @@
             opacity: 0.9;
             max-width: 800px;
             margin: 0 auto;
-            line-height: 1.7;
         }
 
         /* Main Container */
@@ -231,7 +256,6 @@
         .card-subtitle {
             font-size: 1rem;
             color: var(--gray-600);
-            line-height: 1.6;
         }
 
         .card-body {
@@ -283,7 +307,7 @@
             padding: var(--space-md);
             border: 2px solid var(--gray-300);
             border-radius: var(--radius-md);
-            font-size: 1rem;
+            font-size: 16pt;
             font-family: var(--font-primary);
             background: var(--white);
             transition: all 0.3s ease;
@@ -304,7 +328,6 @@
         .prefix-example small {
             color: var(--gray-500);
             font-size: 0.8125rem;
-            line-height: 1.5;
         }
 
         .form-textarea {
@@ -313,8 +336,7 @@
             padding: var(--space-lg);
             border: 2px solid var(--gray-300);
             border-radius: var(--radius-lg);
-            font-size: 1rem;
-            line-height: 1.7;
+            font-size: 16pt;
             font-family: var(--font-primary);
             background: var(--white);
             resize: vertical;
@@ -322,6 +344,7 @@
             overflow-y: auto;
             word-wrap: break-word;
             white-space: pre-wrap;
+            line-height: 1.5; /* ปรับ line-height เพื่อลบระยะห่าง */
         }
 
         .form-textarea:focus {
@@ -502,8 +525,7 @@
             min-height: 400px;
             max-height: 600px;
             font-family: var(--font-primary);
-            font-size: 1rem;
-            line-height: 1.7;
+            font-size: 16pt;
             color: var(--gray-800);
             overflow-wrap: break-word;
             overflow-y: auto;
@@ -519,16 +541,14 @@
 
         .output-box p {
             margin: 0;
-            line-height: 1.7;
+            line-height: 1.5; /* ปรับ line-height เพื่อลบช่องว่างระหว่างบรรทัด */
             white-space: pre-wrap;
-            margin-bottom: var(--space-xs);
         }
 
         .output-box .heading-line {
-            font-weight: 600;
-            font-size: 1.0625rem;
+            font-weight: bold;
+            font-size: 16pt;
             color: var(--gray-800);
-            margin-bottom: var(--space-xs);
         }
 
         .output-box .placeholder {
@@ -837,9 +857,9 @@
                 <div class="form-group">
                     <div class="prefix-control">
                         <label for="sectionPrefix" class="prefix-label">เลขข้อใหญ่นำหน้า (ไม่บังคับ)</label>
-                        <input type="number" id="sectionPrefix" class="prefix-input" min="1" max="99" placeholder="เช่น 2" title="ใส่เลขข้อใหญ่ที่ต้องการเพิ่มข้างหน้า">
+                        <input type="text" id="sectionPrefix" class="prefix-input" placeholder="เช่น 2 หรือ 2.2.1" title="ใส่เลขข้อใหญ่ที่ต้องการเพิ่มข้างหน้า">
                         <div class="prefix-example">
-                            <small><strong>ตัวอย่าง:</strong> ใส่ "2" จะทำให้ 1.1 → 2.1.1, 1.1.1 → 2.1.1.1</small>
+                            <small><strong>ตัวอย่าง:</strong> ใส่ "2.2" จะทำให้ 1.1 → 2.2.1.1, 1.1.1 → 2.2.1.1.1</small>
                         </div>
                     </div>
                     
@@ -935,7 +955,7 @@
                     <h4>📋 มาตรฐานการจัดรูปแบบ</h4>
                     <ul class="instruction-list">
                         <li class="instruction-item">
-                            <strong>ฟอนต์และขนาด:</strong> ใช้ฟอนต์ 'TH Sarabun PSK' หรือ 'Sarabun' ขนาด 16px ตามมาตรฐานเอกสารราชการ
+                            <strong>ฟอนต์และขนาด:</strong> ใช้ฟอนต์ 'TH Sarabun PSK' หรือ 'Sarabun' ขนาด 16pt ตามมาตรฐานเอกสารราชการ
                         </li>
                         <li class="instruction-item">
                             <strong>การเยื้องข้อความ:</strong>
@@ -1019,7 +1039,7 @@
         // Function to format the text
         const formatText = () => {
             const inputTextValue = inputText.value;
-            const sectionPrefix = sectionPrefixInput.value;
+            const sectionPrefix = sectionPrefixInput.value.trim();
             
             if (!inputTextValue.trim()) {
                 outputDiv.innerHTML = `<div class="placeholder">กรุณากรอกข้อความในช่องด้านซ้าย แล้วกดปุ่ม "จัดรูปแบบอัตโนมัติ" เพื่อเริ่มต้นการใช้งานระบบ<br><br><strong>ระบบรองรับ:</strong><br>✅ ข้อความไม่จำกัดขนาด<br>✅ ความเร็วสูงและเสถียร</div>`;
@@ -1028,25 +1048,23 @@
             }
             
             let outputHtml = '';
-            const lines = inputTextValue.split('\n');
+            let outputText = '';
+            // Filter out empty lines and trim whitespace
+            const lines = inputTextValue.split('\n').filter(line => line.trim() !== '');
             const headingPattern = /^(\d+(\.\d+)*\.?)(\s*)(.*)$/;
             
             lines.forEach(line => {
-                const trimmedLine = line.trim();
-                
-                if (trimmedLine === '') return;
-                
-                const match = trimmedLine.match(headingPattern);
+                let formattedLine;
+                const match = line.trim().match(headingPattern);
                 
                 if (match) {
                     let headingNumber = match[1];
-                    const headingContent = match[4];
+                    let headingContent = match[4];
                     
-                    // Apply section prefix if provided
-                    if (sectionPrefix && sectionPrefix.trim() !== '') {
-                        const prefixNum = parseInt(sectionPrefix.trim());
-                        if (!isNaN(prefixNum) && prefixNum > 0) {
-                            headingNumber = prefixNum + '.' + headingNumber;
+                    if (sectionPrefix) {
+                        const isValidPrefix = sectionPrefix.split('.').every(part => !isNaN(parseInt(part)) && parseInt(part) >= 0);
+                        if (isValidPrefix) {
+                            headingNumber = sectionPrefix + '.' + headingNumber;
                         }
                     }
                     
@@ -1054,14 +1072,30 @@
                     const detectedHeadingLevel = parts.length;
                     const numSpaces = (detectedHeadingLevel > 0) ? (detectedHeadingLevel - 1) * 4 : 0;
                     const indentation = '&nbsp;'.repeat(numSpaces);
+
+                    // Convert to lowercase and handle HTML output
+                    headingContent = headingContent.toLowerCase();
+                    formattedLine = `<p class="heading-line" style="white-space: pre-wrap; font-family: 'TH Sarabun PSK', sans-serif;">${indentation}${headingNumber} ${headingContent}</p>`;
                     
-                    outputHtml += `<p class="heading-line" style="white-space: pre-wrap;">${indentation}${headingNumber} ${headingContent}</p>`;
+                    // Prepare text for .txt file, using actual spaces
+                    const textIndentation = ' '.repeat(numSpaces);
+                    outputText += `${textIndentation}${headingNumber} ${headingContent}\n`;
+                    
                 } else {
-                    outputHtml += `<p style="white-space: pre-wrap;">${trimmedLine}</p>`;
+                    const content = line.trim().toLowerCase();
+                    if (content) {
+                        formattedLine = `<p style="white-space: pre-wrap; font-family: 'TH Sarabun PSK', sans-serif;">${content}</p>`;
+                        outputText += `${content}\n`;
+                    }
+                }
+
+                if (formattedLine) {
+                    outputHtml += formattedLine;
                 }
             });
             
             outputDiv.innerHTML = outputHtml;
+            outputDiv.dataset.textToSave = outputText; // Store text for saving
             showStatus('✅ จัดรูปแบบเสร็จสิ้น', 'success');
         };
         
@@ -1073,8 +1107,27 @@
             }
             
             try {
-                // Use the modern Clipboard API
-                await navigator.clipboard.writeText(outputDiv.innerText);
+                // To copy with formatting, we create a temporary element
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = outputDiv.innerHTML;
+                
+                // Add a style tag to ensure font is copied
+                const styleTag = document.createElement('style');
+                styleTag.textContent = `.heading-line, p { font-family: 'TH Sarabun PSK', sans-serif; font-size: 16pt; }`;
+                document.head.appendChild(styleTag);
+
+                document.body.appendChild(tempDiv);
+                
+                // Use a different method to select and copy HTML content
+                const range = document.createRange();
+                range.selectNode(tempDiv);
+                window.getSelection().removeAllRanges();
+                window.getSelection().addRange(range);
+                document.execCommand('copy');
+                window.getSelection().removeAllRanges();
+                
+                document.body.removeChild(tempDiv);
+                document.head.removeChild(styleTag);
                 
                 const originalText = copyButton.innerHTML;
                 copyButton.innerHTML = '✅ คัดลอกแล้ว!';
@@ -1094,9 +1147,9 @@
         
         // Function to save output as a text file
         const saveAsTxt = () => {
-            const textToSave = outputDiv.innerText;
+            const textToSave = outputDiv.dataset.textToSave;
             
-            if (!textToSave.trim() || outputDiv.querySelector('.placeholder')) {
+            if (!textToSave || outputDiv.querySelector('.placeholder')) {
                 showStatus('❌ ไม่มีข้อมูลให้บันทึก', 'error');
                 return;
             }
